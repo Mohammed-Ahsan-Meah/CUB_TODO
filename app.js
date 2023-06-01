@@ -21,6 +21,9 @@ async function connectToMongoDB() {
       // Handle the error appropriately, e.g., retry, show an error message, or exit the application
     }
   }
+
+  mongoose.set('strictQuery', false);
+
   
   // Call the function to connect to MongoDB
   connectToMongoDB();
@@ -52,7 +55,7 @@ app.get("/",function(req,res){
     // console.log(f);
     if(f.length===0)
     {
-      Item.insertMany(defaultItem,function(err)
+        (defaultItem,function(err)
       {
           if(err){
               console.log(err);
@@ -61,7 +64,7 @@ app.get("/",function(req,res){
               console.log("Successfully saved items to DB");
           }
       });
-      res.redirect("/");
+      res.redirect('/');
     }
     else{
     res.render("list",{newListItems:f});
