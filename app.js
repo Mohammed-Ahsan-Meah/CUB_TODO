@@ -6,7 +6,24 @@ app.set('view engine','ejs');
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
-mongoose.connect("mongodb://127.0.0.1:27017/todolistDB",{useNewUrlParser:true,useUnifiedTopology:true});
+async function connectToMongoDB() {
+    try {
+      // Your MongoDB connection code using Mongoose or any other library
+      await mongoose.connect('mongodb://127.0.0.1:27017/todolistDB', {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+      
+      console.log('Connected to MongoDB');
+      // Further code after successful connection
+    } catch (error) {
+      console.error('Error connecting to MongoDB:', error);
+      // Handle the error appropriately, e.g., retry, show an error message, or exit the application
+    }
+  }
+  
+  // Call the function to connect to MongoDB
+  connectToMongoDB();
 const itemSchema ={
     name:String
 }
@@ -81,7 +98,7 @@ app.post("/delete",function(req,res){
 
 
 
-app.listen(2000,function()
+app.listen(8000,function()
 {
-    console.log("Server is listening to port 2000");
+    console.log("Server is listening to port 8000");
 })
